@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col } from "react-bootstrap";
 
-function App() {
+import { getCommitList } from "./services";
+import { ICommit } from "./models";
+import NavBar from "./components/NavBar";
+import CommitList from "./components/CommitList";
+
+const App: React.FC = () => {
+  const [commits, setCommits] = useState<ICommit[]>([]);
+
+  const fetchData = async () => {
+    const commitList = await getCommitList();
+
+    setCommits(commitList);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <NavBar />
+      <Container>
+        <Row>
+          <Col>History</Col>
+        </Row>
+        <Row>
+          <Col>
+            <CommitList commits={commits} />
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
-}
+};
 
 export default App;
