@@ -9,7 +9,6 @@ interface IProps {
 }
 
 const CommitList: React.FC<IProps> = ({ commits }) => {
-  console.log("commit", commits);
   return (
     <ListGroup>
       {commits &&
@@ -18,7 +17,10 @@ const CommitList: React.FC<IProps> = ({ commits }) => {
             <Row>
               <Col>{commit.commit.message}</Col>
               <Col style={{ display: "flex", justifyContent: "flex-end" }}>
-                {format(new Date(commit.commit.committer.date), "MM/dd/yyyy")}
+                {format(
+                  new Date(commit.commit.committer.date),
+                  "hh:mm MM/dd/yyyy"
+                )}
               </Col>
             </Row>
             <Row>
